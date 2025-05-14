@@ -1,0 +1,38 @@
+.container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .hero {
+    background-color: #e6f4ec;
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .hero h1 {
+    color: #236c42;
+    font-size: 2rem;
+  }
+  
+  .mission {
+    margin-bottom: 2rem;
+  }
+  
+  .mission h2,
+  .contact h2 {
+    color: #236c42;
+    margin-bottom: 0.5rem;
+  }
+  
+  .contact ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .contact li {
+    margin-bottom: 0.5rem;
+  }
+  

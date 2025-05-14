@@ -1,0 +1,31 @@
+.container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #f8fdf9;
+    border-radius: 12px;
+  }
+  
+  h1 {
+    color: #236c42;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .section {
+    margin-bottom: 2rem;
+  }
+  
+  .section h2 {
+    color: #236c42;
+    margin-bottom: 0.5rem;
+  }
+  
+  .section ul {
+    padding-left: 1.5rem;
+  }
+  
+  .section li {
+    margin-bottom: 0.5rem;
+  }
+  
