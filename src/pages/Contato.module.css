@@ -55,3 +55,9 @@
     background-color: #1e5936;
   }
   
+  .mapContainer {
+    margin-top: 2rem;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
