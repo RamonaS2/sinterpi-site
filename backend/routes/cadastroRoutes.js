@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.post(
-  '/api/cadastro',
+  '/cadastro',
   upload.fields([
     { name: 'identidade', maxCount: 1 },
     { name: 'pedido', maxCount: 1 },
@@ -88,5 +88,20 @@ connection.query(sql, values, (err, results) => {
     }
   }
 );
+
+// ✅ Rota de listagem dos afiliados
+router.get('/afiliados', (req, res) => {
+  const sql = 'SELECT * FROM afiliados';
+
+  connection.query(sql, (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar afiliados:', err);
+      return res.status(500).json({ error: 'Erro ao buscar afiliados' });
+    }
+    res.status(200).json(results);
+  });
+  console.log('Rotas carregadas');
+});
+
 
 module.exports = router;
