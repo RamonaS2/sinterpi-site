@@ -89,7 +89,7 @@
 
 .textareaField {
   resize: vertical; /* Permite redimensionar verticalmente */
-  min-height: 200px; /* Altura mínima para o textarea */
+  min-height: 155px; /* Altura mínima para o textarea */
 }
 
 .submitButton {

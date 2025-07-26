@@ -113,13 +113,13 @@ const Cadastro = () => {
         <input name="orgao" placeholder="Órgão" value={formData.orgao} onChange={handleChange} />
 
         <label className={styles.checkboxLabel}>
+          Desejo me Sindicalizar
           <input
             type="checkbox"
             name="sindicalizar"
             checked={formData.sindicalizar}
             onChange={handleChange}
           />
-          Desejo me Sindicalizar
         </label>
 
         {/* Campos de upload de arquivo */}

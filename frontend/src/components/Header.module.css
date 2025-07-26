@@ -1,78 +1,197 @@
-/* frontend/src/components/Header.module.css */
-
 .header {
   background-color: #1b5e20; /* Verde institucional escuro */
   color: white;
   padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sutil sombra */
-  position: sticky; /* Fixa a barra no topo */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Sombra para profundidade */
+  position: sticky; /* Fixa o cabeçalho no topo ao rolar */
   top: 0;
-  z-index: 1000; /* Garante que fique acima de outros elementos */
+  z-index: 1000; /* Garante que o cabeçalho fique acima de outros elementos */
+}
+
+.headerContent {
+  max-width: 2000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between; /* Espaça logo do grupo nav/cta */
+  align-items: center; /* Alinha verticalmente */
 }
 
 .logoContainer {
   display: flex;
   align-items: center;
-}
-
-.logoLink {
-  display: flex; /* Para alinhar imagem e texto */
-  align-items: center;
   text-decoration: none;
   color: white;
+  font-size: 1.8rem;
   font-weight: bold;
-  font-size: 1.5rem;
+  flex-shrink: 0; /* Garante que o logo não seja comprimido */
 }
 
-.logoImage {
-  height: 50px; /* Ajuste o tamanho do logo na navbar */
+.logo {
+  height: 50px;
+  width: auto;
   margin-right: 10px;
-  filter: drop-shadow(0 0 5px rgba(0,0,0,0.3)); /* Sombra para o logo se destacar */
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
 }
 
-.logoText {
-  /* Opcional: estilizar o texto "SINTERPI" ao lado do logo */
-  font-size: 1.6rem;
-  white-space: nowrap; /* Evita quebra de linha em nomes curtos */
-}
-
-.navLinks {
+/* Grupo da Navegação e Botão de Ação */
+.navAndCtaGroup {
   display: flex;
-  gap: 1.5rem; /* Aumenta o espaçamento entre os links */
+  align-items: center;
+  gap: 1.5rem; /* Espaço entre a navegação e o botão CTA */
 }
 
-.link {
+.navList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 1.5rem; /* Espaço entre os itens do menu */
+}
+
+.navLink {
   color: white;
   text-decoration: none;
+  font-size: 1.1rem;
   font-weight: 500;
-  transition: color 0.3s ease, transform 0.2s ease; /* Adiciona transição para hover */
-  padding: 0.5rem 0; /* Padding para área de clique maior */
+  padding: 0.5rem 0.8rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  white-space: nowrap; /* Impede quebras de linha em palavras longas */
 }
 
-.link:hover {
-  color: #a5d6a7; /* Verde claro no hover */
-  transform: translateY(-2px); /* Efeito sutil de levantar */
+.navLink:hover {
+  background-color: #2e8b57; /* Verde mais claro no hover */
 }
 
-/* Responsividade básica para telas menores */
+.activeLink {
+  composes: navLink; /* Herda os estilos de navLink */
+  background-color: #2e8b57; /* Fundo verde para o link ativo */
+  font-weight: bold;
+}
+
+/* Botão de Chamada para Ação (CTA) */
+.ctaButton {
+  background-color: #4CAF50; /* Verde mais claro para o botão */
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px; /* Botão arredondado */
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  flex-shrink: 0; /* Garante que o botão não seja comprimido */
+}
+
+.ctaButton:hover {
+  background-color: #388e3c; /* Verde mais escuro no hover */
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Menu Hambúrguer (Mobile) */
+.hamburgerMenu {
+  display: none; /* Escondido por padrão em desktop */
+  flex-direction: column;
+  justify-content: space-around;
+  width: 30px;
+  height: 25px;
+  cursor: pointer;
+  z-index: 1001; /* Fica acima do menu aberto */
+}
+
+.bar {
+  width: 100%;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.bar:nth-child(1).open {
+  transform: translateY(11px) rotate(45deg);
+}
+.bar:nth-child(2).open {
+  opacity: 0;
+}
+.bar:nth-child(3).open {
+  transform: translateY(-11px) rotate(-45deg);
+}
+
+/* Responsividade para Mobile */
 @media (max-width: 768px) {
   .header {
-    flex-direction: column;
     padding: 1rem;
   }
 
-  .navLinks {
-    margin-top: 1rem;
-    flex-direction: column; /* Links em coluna em telas menores */
-    gap: 0.5rem;
-    width: 100%;
-    text-align: center;
+  .headerContent {
+    justify-content: space-between; /* Logo à esquerda, hambúrguer à direita */
   }
 
   .logoContainer {
-    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+  }
+
+  .logo {
+    height: 40px;
+  }
+
+  .hamburgerMenu {
+    display: flex; /* Mostra o hambúrguer em mobile */
+  }
+
+  /* O grupo de navegação e CTA para mobile (o menu que abre) */
+  .navAndCtaGroup {
+    flex-direction: column; /* Itens empilhados */
+    width: 100%;
+    position: absolute;
+    top: 70px; /* Abaixo do cabeçalho */
+    left: 0;
+    background-color: #1b5e20; /* Mesma cor do header */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    height: 0; /* Escondido por padrão */
+    overflow: hidden; /* Esconde o conteúdo extra */
+    transition: height 0.3s ease-out;
+    align-items: center; /* Centraliza os itens empilhados */
+    padding-bottom: 0; /* Começa sem padding inferior */
+    gap: 0; /* Remove gap quando empilhado */
+  }
+
+  .navAndCtaGroupOpen {
+    height: auto; /* Abre o menu */
+    max-height: 300px; /* Limita a altura para animação */
+    padding-bottom: 1rem; /* Adiciona padding inferior quando aberto */
+  }
+
+  .nav {
+    width: 100%; /* Ocupa a largura total no menu aberto */
+    padding: 1rem 0; /* Padding vertical para a lista de links */
+  }
+
+  .navList {
+    flex-direction: column;
+    width: 100%;
+    gap: 0; /* Remove o espaço entre itens empilhados */
+  }
+
+  .navItem {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separador entre itens */
+  }
+
+  .navItem:last-child {
+    border-bottom: none;
+  }
+
+  .navLink, .activeLink {
+    display: block; /* Ocupa a largura total do item */
+    padding: 1rem 2rem; /* Aumenta o padding para cliques fáceis */
+    font-size: 1.2rem;
+  }
+
+  .ctaButton {
+    margin: 1rem auto; /* Centraliza o botão e adiciona margem vertical */
+    width: calc(100% - 4rem); /* Ajusta largura para padding */
+    display: block; /* Garante que o botão ocupe sua própria linha */
   }
 }
