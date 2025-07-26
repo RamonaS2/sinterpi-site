@@ -1,7 +1,6 @@
-// backend/config/db.js
 const { Sequelize } = require('sequelize');
 const dotenv = require('dotenv');
-dotenv.config(); // Carrega as variáveis do .env
+dotenv.config(); 
 
 const sequelize = new Sequelize(
   process.env.DB_NAME,

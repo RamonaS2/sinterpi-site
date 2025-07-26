@@ -14,7 +14,7 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/admin', adminRoutes);
 app.use('/api/afiliados', afiliadosRoutes); // A rota de cadastro será /api/afiliados (POST)
 
-sequelize.sync({ force: true }).then(() => { // Se precisar apagar e recriar, use { force: true } uma vez aqui
+sequelize.sync().then(() => { // Se precisar apagar e recriar, use { force: true } uma vez aqui
   console.log('Banco sincronizado');
   app.listen(process.env.PORT, () =>
     console.log(`Servidor rodando na porta ${process.env.PORT}`)

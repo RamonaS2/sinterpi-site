@@ -1,19 +1,184 @@
 .container {
   padding: 2rem;
+  max-width: 1200px; /* Aumenta a largura máxima para a tabela */
+  margin: 0 auto;
+  background-color: #f8fcf8; /* Fundo suave */
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.07);
 }
+
+.adminHeader { /* Novo estilo para o cabeçalho da página de admin */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee; /* Linha divisória sutil */
+}
+
+.adminHeader h2 {
+  color: #1b5e20; /* Verde institucional */
+  font-size: 2.5rem;
+  margin: 0; /* Remove margem padrão do h2 */
+}
+
+/* Estilo para o botão de Logout */
+.logoutButton {
+  background-color: #dc3545; /* Vermelho para destaque */
+  color: white;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logoutButton:hover {
+  background-color: #c82333; /* Tom mais escuro no hover */
+  transform: translateY(-2px);
+}
+
 
 .table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 1rem; /* Espaçamento da tabela */
 }
 
 .table th,
 .table td {
-  border: 1px solid #ccc;
-  padding: 0.5rem;
+  border: 1px solid #e0e0e0; /* Borda mais clara */
+  padding: 0.8rem; /* Aumenta o padding das células */
   text-align: left;
+  font-size: 0.95rem;
+  color: #333;
 }
 
 .table th {
-  background-color: #e6f4ec; /* verde claro */
+  background-color: #e6f4ec; /* Verde claro para cabeçalhos de tabela */
+  color: #1b5e20;
+  font-weight: bold;
+  text-transform: uppercase; /* Texto em maiúsculas */
+}
+
+.table tr:nth-child(even) { /* Estilo para linhas pares */
+  background-color: #f9f9f9;
+}
+
+.table tr:hover { /* Efeito de hover nas linhas */
+  background-color: #eef8ee;
+}
+
+/* Estilos para os botões dentro da tabela (download e excluir) */
+.downloadButton,
+.actionButton {
+  background-color: #4CAF50; /* Verde */
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s ease;
+  margin-right: 5px; /* Espaço entre botões */
+  white-space: nowrap; /* Impede quebras de linha */
+}
+
+.actionButton { /* Botão Excluir, pode ser vermelho ou manter verde */
+  background-color: #ffc107; /* Amarelo para exclusão */
+  color: #333; /* Texto escuro */
+  font-weight: bold;
+}
+
+.downloadButton:hover {
+  background-color: #388e3c;
+}
+
+.actionButton:hover {
+  background-color: #e0a800; /* Amarelo mais escuro no hover */
+}
+
+/* Responsividade da tabela */
+@media (max-width: 768px) {
+  .adminHeader {
+    flex-direction: column;
+    align-items: flex-start; /* Alinha o título e o botão à esquerda */
+    gap: 1rem;
+  }
+
+  .adminHeader h2 {
+    font-size: 2rem;
+  }
+
+  .logoutButton {
+    width: 100%; /* Botão de logout ocupa largura total em mobile */
+  }
+
+  .table {
+    display: block;
+    overflow-x: auto; /* Permite rolar a tabela horizontalmente */
+    white-space: nowrap; /* Impede quebra de linha em células */
+    -webkit-overflow-scrolling: touch; /* Melhora o scroll em iOS */
+  }
+
+  .table thead, .table tbody, .table th, .table td, .table tr {
+    display: block; /* Para permitir o scroll horizontal */
+  }
+
+  .table thead tr {
+    position: absolute;
+    top: -9999px; /* Esconde o cabeçalho original */
+    left: -9999px;
+  }
+
+  .table tr {
+    border: 1px solid #e0e0e0;
+    margin-bottom: 0.8rem;
+  }
+
+  .table td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%; /* Espaço para o pseudo-elemento */
+    text-align: right;
+  }
+
+  .table td::before {
+    content: attr(data-label); /* Usa o atributo data-label */
+    position: absolute;
+    left: 0.8rem;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+    color: #1b5e20;
+  }
+
+  /* Adicionar data-label no JSX da tabela */
+  .table td:nth-of-type(1)::before { content: "Nome:"; }
+  .table td:nth-of-type(2)::before { content: "CPF:"; }
+  .table td:nth-of-type(3)::before { content: "Email:"; }
+  .table td:nth-of-type(4)::before { content: "Telefone:"; }
+  .table td:nth-of-type(5)::before { content: "Município:"; }
+  .table td:nth-of-type(6)::before { content: "RG:"; }
+  .table td:nth-of-type(7)::before { content: "Nascimento:"; }
+  .table td:nth-of-type(8)::before { content: "Cargo:"; }
+  .table td:nth-of-type(9)::before { content: "Local de Trab.:"; }
+  .table td:nth-of-type(10)::before { content: "Matrícula:"; }
+  .table td:nth-of-type(11)::before { content: "Órgão:"; }
+  .table td:nth-of-type(12)::before { content: "Sindicalizar:"; }
+  .table td:nth-of-type(13)::before { content: "Documentos:"; }
+  .table td:nth-of-type(14)::before { content: "Ações:"; }
+}
+
+@media (max-width: 480px) {
+  .table th, .table td {
+    padding: 0.6rem;
+    font-size: 0.9rem;
+  }
 }

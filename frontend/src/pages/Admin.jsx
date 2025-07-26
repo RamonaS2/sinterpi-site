@@ -1,9 +1,9 @@
-// frontend/src/pages/Admin.jsx
-
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from './Admin.module.css'; 
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
 
 function Admin() {
   const [afiliados, setAfiliados] = useState([]);
@@ -17,7 +17,7 @@ function Admin() {
         navigate('/login');
         return;
       }
-      const resposta = await axios.get('http://localhost:3001/api/afiliados', {
+      const resposta = await axios.get(`${API_BASE_URL}/afiliados`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -46,7 +46,7 @@ function Admin() {
         navigate('/login');
         return;
       }
-      await axios.delete(`http://localhost:3001/api/afiliados/${id}`, {
+      await axios.delete(`${API_BASE_URL}/afiliados/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -56,7 +56,7 @@ function Admin() {
     } catch (erro) {
       console.error('Erro ao excluir afiliado:', erro);
       if (erro.response && (erro.response.status === 401 || erro.response.status === 403)) {
-        alert('Você não tem autorização. Faça login novamente.');
+        alert('Erro ao excluir afiliado. Faça login novamente.'); // Mudei a mensagem para refletir a necessidade de login
         localStorage.removeItem('token');
         navigate('/login');
       } else {
@@ -65,7 +65,7 @@ function Admin() {
     }
   };
 
-  const handleDownload = async (tipo, nomeArquivo) => { // 'tipo' não será mais usado na URL
+  const handleDownload = async (tipo, nomeArquivo) => {
     if (!nomeArquivo) {
       alert(`Nenhum arquivo de ${tipo} disponível.`);
       return;
@@ -77,11 +77,11 @@ function Admin() {
         navigate('/login');
         return;
       }
-      const response = await axios.get(`http://localhost:3001/api/afiliados/download/${nomeArquivo}`, {
+      const response = await axios.get(`${API_BASE_URL}/afiliados/download/${nomeArquivo}`, {
         headers: {
           Authorization: `Bearer ${token}`
         },
-        responseType: 'blob', // Importante para baixar arquivos
+        responseType: 'blob',
       });
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -106,6 +106,12 @@ function Admin() {
     }
   };
 
+  // === NOVA FUNÇÃO PARA LOGOUT ===
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Remove o token do localStorage
+    alert('Sessão encerrada com sucesso!');
+    navigate('/login'); // Redireciona para a página de login
+  };
 
   useEffect(() => {
     buscarAfiliados();
@@ -113,7 +119,12 @@ function Admin() {
 
   return (
     <div className={styles.container}>
-      <h2>Painel Administrativo - Lista de Afiliados</h2>
+      <div className={styles.adminHeader}> 
+        <h2>Painel Administrativo - Lista de Afiliados</h2>
+        <button onClick={handleLogout} className={styles.logoutButton}>
+          Logout
+        </button>
+      </div>
       {afiliados.length === 0 ? (
         <p>Nenhum afiliado encontrado.</p>
       ) : (
@@ -125,6 +136,13 @@ function Admin() {
               <th>Email</th>
               <th>Telefone</th>
               <th>Município</th>
+              <th>RG</th> 
+              <th>Nascimento</th>
+              <th>Cargo</th>
+              <th>Local de Trabalho</th>
+              <th>Matrícula</th>
+              <th>Órgão</th>
+              <th>Sindicalizar</th>
               <th>Documentos</th>
               <th>Ações</th>
             </tr>
@@ -137,25 +155,32 @@ function Admin() {
                 <td>{afiliado.email}</td>
                 <td>{afiliado.telefone}</td>
                 <td>{afiliado.municipio}</td>
+                <td>{afiliado.rg}</td> 
+                <td>{afiliado.nascimento ? new Date(afiliado.nascimento).toLocaleDateString() : 'N/A'}</td> 
+                <td>{afiliado.cargo}</td>
+                <td>{afiliado.localTrabalho}</td>
+                <td>{afiliado.matricula}</td>
+                <td>{afiliado.orgao}</td>
+                <td>{afiliado.sindicalizar ? 'Sim' : 'Não'}</td> 
                 <td>
                   {afiliado.identidade && (
-                    <button onClick={() => handleDownload('identidade', afiliado.identidade)}>
+                    <button onClick={() => handleDownload('identidade', afiliado.identidade)} className={styles.downloadButton}>
                       Identidade
                     </button>
                   )}{' '}
                   {afiliado.pedido && (
-                    <button onClick={() => handleDownload('pedido', afiliado.pedido)}>
+                    <button onClick={() => handleDownload('pedido', afiliado.pedido)} className={styles.downloadButton}>
                       Pedido
                     </button>
                   )}{' '}
                   {afiliado.comprovante && (
-                    <button onClick={() => handleDownload('comprovante', afiliado.comprovante)}>
+                    <button onClick={() => handleDownload('comprovante', afiliado.comprovante)} className={styles.downloadButton}>
                       Comprovante
                     </button>
                   )}
                 </td>
                 <td>
-                  <button onClick={() => excluirAfiliado(afiliado.id)}>Excluir</button>
+                  <button onClick={() => excluirAfiliado(afiliado.id)} className={styles.actionButton}>Excluir</button>
                 </td>
               </tr>
             ))}

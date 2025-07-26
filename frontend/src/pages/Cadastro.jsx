@@ -2,6 +2,9 @@ import React, { useState, useRef } from "react";
 import axios from "axios";
 import styles from "./Cadastro.module.css";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
+
 const Cadastro = () => {
   const [formData, setFormData] = useState({
     nome: "",
@@ -46,6 +49,7 @@ const Cadastro = () => {
     }));
   };
 
+
   const resetForm = () => {
     setFormData({
       nome: "", cpf: "", rg: "", nascimento: "", email: "", telefone: "",
@@ -73,7 +77,7 @@ const Cadastro = () => {
     if (arquivos.comprovante) data.append('comprovante', arquivos.comprovante);
 
     try {
-      await axios.post('http://localhost:3001/api/afiliados', data, {
+      await axios.post(`${API_BASE_URL}/afiliados`, data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

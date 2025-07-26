@@ -3,6 +3,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from './Login.module.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; 
+
+
 function Login() {
   const [usuario, setUsuario] = useState('');
   const [senha, setSenha] = useState('');
@@ -11,13 +14,12 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      // AQUI ESTÁ A CORREÇÃO: Mude a URL para /api/admin/login
-      const resposta = await axios.post('http://localhost:3001/api/admin/login', { usuario, senha });
+      const resposta = await axios.post(`${API_BASE_URL}/admin/login`, { usuario, senha });
       localStorage.setItem('token', resposta.data.token);
       alert('Login realizado com sucesso!');
-      navigate('/admin'); // Redireciona para a página de administração
+      navigate('/admin'); 
     } catch (error) {
-      console.error('Erro de login:', error); // Para depuração
+      console.error('Erro de login:', error); 
       alert('Usuário ou senha inválidos.');
     }
   };

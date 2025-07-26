@@ -1,25 +1,27 @@
 const Afiliado = require('../models/Afiliado');
 const path = require('path');
-const fs = require('fs'); 
+const fs = require('fs');
 
 const cadastrarAfiliado = async (req, res) => {
   try {
-    const { nome, cpf, rg, nascimento, email, telefone, municipio, cargo, localTrabalho, matricula, orgao, sindicalizar } = req.body; 
-    
-    // Verifique se req.files existe antes de acessar suas propriedades
+    const {
+      nome, cpf, rg, nascimento, email, telefone,
+      municipio, cargo, localTrabalho, matricula, orgao, sindicalizar
+    } = req.body;
+
     const identidade = req.files?.identidade?.[0]?.filename || null;
     const pedido = req.files?.pedido?.[0]?.filename || null;
     const comprovante = req.files?.comprovante?.[0]?.filename || null;
 
     const novoAfiliado = await Afiliado.create({
-      nome, cpf, rg, nascimento, email, telefone, municipio, cargo, localTrabalho, matricula, orgao, sindicalizar, 
-      identidade, pedido, comprovante
+      nome, cpf, rg, nascimento, email, telefone, municipio, cargo,
+      localTrabalho, matricula, orgao, sindicalizar, identidade, pedido, comprovante
     });
 
     res.status(201).json(novoAfiliado);
   } catch (error) {
     console.error('Erro ao cadastrar afiliado:', error);
-    res.status(500).json({ erro: 'Erro ao cadastrar afiliado', detalhe: error.message });
+    res.status(500).json({ erro: 'Erro interno no servidor ao cadastrar afiliado.' });
   }
 };
 
@@ -29,7 +31,7 @@ const listarAfiliados = async (req, res) => {
     res.json(lista);
   } catch (error) {
     console.error('Erro ao listar afiliados:', error);
-    res.status(500).json({ erro: 'Erro ao listar afiliados' });
+    res.status(500).json({ erro: 'Erro interno no servidor ao listar afiliados.' });
   }
 };
 
@@ -54,16 +56,16 @@ const excluirAfiliado = async (req, res) => {
     }
 
     await Afiliado.destroy({ where: { id } });
-    res.status(204).end();
+    res.status(204).json({ mensagem: 'Afiliado excluído com sucesso.' }); 
   } catch (error) {
     console.error('Erro ao excluir afiliado:', error);
-    res.status(500).json({ erro: 'Erro ao excluir afiliado' });
+    res.status(500).json({ erro: 'Erro interno no servidor ao excluir afiliado.' });
   }
 };
 
 const downloadDocumento = (req, res) => {
   const filename = req.params.filename;
-  const filePath = path.join(__dirname, '..', 'uploads', filename); // Caminho correto para a pasta 'uploads'
+  const filePath = path.join(__dirname, '..', 'uploads', filename);
 
   fs.access(filePath, fs.constants.F_OK, (err) => {
     if (err) {
@@ -73,16 +75,15 @@ const downloadDocumento = (req, res) => {
     res.download(filePath, (err) => {
       if (err) {
         console.error(`Erro ao fazer download do arquivo ${filename}:`, err);
-        res.status(500).json({ mensagem: 'Erro ao baixar o arquivo.' });
+        res.status(500).json({ mensagem: 'Erro interno no servidor ao baixar o arquivo.' });
       }
     });
   });
 };
 
-
 module.exports = {
   cadastrarAfiliado,
   listarAfiliados,
   excluirAfiliado,
-  downloadDocumento, 
+  downloadDocumento,
 };
