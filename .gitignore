@@ -1,0 +1,5 @@
+# Arquivos de ambiente do backend
+backend/.env
+
+# Arquivos de ambiente do frontend
+frontend/.env
