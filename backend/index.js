@@ -7,16 +7,13 @@ const fs = require("fs");
 const app = express();
 const PORT = 3001;
 
-// Configurar CORS
 app.use(cors());
 
-// Criar pasta "uploads" se não existir
 const uploadsDir = path.join(__dirname, "uploads");
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir);
 }
 
-// Configurar multer para armazenar arquivos localmente
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");

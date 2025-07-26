@@ -6,17 +6,16 @@ const Cadastro = () => {
   const [formData, setFormData] = useState({
     nome: "",
     cpf: "",
-    rg: "",
-    nascimento: "",
+    rg: "",             
+    nascimento: "",     
     email: "",
     telefone: "",
-    endereco: "",
     municipio: "",
-    cargo: "",
-    localTrabalho: "",
-    matricula: "",
-    orgao: "",
-    sindicalizar: false,
+    cargo: "",          
+    localTrabalho: "",  
+    matricula: "",      
+    orgao: "",          
+    sindicalizar: false, 
   });
 
   const [arquivos, setArquivos] = useState({
@@ -27,7 +26,6 @@ const Cadastro = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // Referências para inputs de arquivos
   const identidadeRef = useRef(null);
   const pedidoRef = useRef(null);
   const comprovanteRef = useRef(null);
@@ -50,27 +48,11 @@ const Cadastro = () => {
 
   const resetForm = () => {
     setFormData({
-      nome: "",
-      cpf: "",
-      rg: "",
-      nascimento: "",
-      email: "",
-      telefone: "",
-      endereco: "",
-      municipio: "",
-      cargo: "",
-      localTrabalho: "",
-      matricula: "",
-      orgao: "",
+      nome: "", cpf: "", rg: "", nascimento: "", email: "", telefone: "",
+      municipio: "", cargo: "", localTrabalho: "", matricula: "", orgao: "",
       sindicalizar: false,
     });
-    setArquivos({
-      identidade: null,
-      pedido: null,
-      comprovante: null,
-    });
-
-    // Resetar campos de arquivos
+    setArquivos({ identidade: null, pedido: null, comprovante: null });
     if (identidadeRef.current) identidadeRef.current.value = "";
     if (pedidoRef.current) pedidoRef.current.value = "";
     if (comprovanteRef.current) comprovanteRef.current.value = "";
@@ -80,92 +62,108 @@ const Cadastro = () => {
     e.preventDefault();
     setLoading(true);
 
-    const dados = new FormData();
+    const data = new FormData();
+    // Adicionar TODOS os campos de texto do formData
     for (const key in formData) {
-      dados.append(key, formData[key]);
+      data.append(key, formData[key]);
     }
-
-    dados.append("identidade", arquivos.identidade);
-    dados.append("pedido", arquivos.pedido);
-    dados.append("comprovante", arquivos.comprovante);
+    // Adicionar arquivos
+    if (arquivos.identidade) data.append('identidade', arquivos.identidade);
+    if (arquivos.pedido) data.append('pedido', arquivos.pedido);
+    if (arquivos.comprovante) data.append('comprovante', arquivos.comprovante);
 
     try {
-      await axios.post("http://localhost:3001/api/cadastro", dados);
-      alert("Cadastro enviado com sucesso!");
+      await axios.post('http://localhost:3001/api/afiliados', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      alert('Cadastro realizado com sucesso!');
       resetForm();
-    } catch (err) {
-      console.error(err);
-      alert("Erro ao enviar cadastro.");
+    } catch (error) {
+      console.error('Erro ao cadastrar:', error);
+      alert('Erro ao realizar cadastro. Tente novamente.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
-      <h2>Cadastro de Afiliado</h2>
-      <input name="nome" placeholder="Nome completo" value={formData.nome} onChange={handleChange} required />
-      <input name="cpf" placeholder="CPF" value={formData.cpf} onChange={handleChange} required />
-      <input name="rg" placeholder="RG" value={formData.rg} onChange={handleChange} required />
-      <input type="date" name="nascimento" value={formData.nascimento} onChange={handleChange} required />
-      <input type="email" name="email" placeholder="E-mail" value={formData.email} onChange={handleChange} required />
-      <input name="telefone" placeholder="Telefone" value={formData.telefone} onChange={handleChange} required />
-      <input name="endereco" placeholder="Endereço" value={formData.endereco} onChange={handleChange} required />
-      <input name="municipio" placeholder="Município" value={formData.municipio} onChange={handleChange} required />
-      <input name="cargo" placeholder="Cargo/Função" value={formData.cargo} onChange={handleChange} required />
-      <input name="localTrabalho" placeholder="Local de trabalho" value={formData.localTrabalho} onChange={handleChange} required />
-      <input name="matricula" placeholder="Matrícula" value={formData.matricula} onChange={handleChange} required />
-      <input name="orgao" placeholder="Órgão/Instituição" value={formData.orgao} onChange={handleChange} required />
-      <label>
-        <input
-          type="checkbox"
-          name="sindicalizar"
-          checked={formData.sindicalizar}
+    <div className={styles.container}>
+      <h2 className={styles.title}>Cadastro de Afiliados</h2>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <input name="nome" placeholder="Nome Completo" value={formData.nome} onChange={handleChange} required />
+        <input name="cpf" placeholder="CPF" value={formData.cpf} onChange={handleChange} required />
+        <input name="email" type="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+        <input name="telefone" placeholder="Telefone" value={formData.telefone} onChange={handleChange} required />
+        <input name="municipio" placeholder="Município" value={formData.municipio} onChange={handleChange} required />
+
+        <input name="rg" placeholder="RG" value={formData.rg} onChange={handleChange} />
+        <label>
+        Data de Nascimento:
+        <input 
+          name="nascimento" type="date" // <--- Importante: Garante o formato de data
+          value={formData.nascimento}
           onChange={handleChange}
-        />
-        Desejo me sindicalizar
-      </label>
+        />  
+        </label>    
+        <input name="cargo" placeholder="Cargo" value={formData.cargo} onChange={handleChange} />
+        <input name="localTrabalho" placeholder="Local de Trabalho" value={formData.localTrabalho} onChange={handleChange} />
+        <input name="matricula" placeholder="Matrícula" value={formData.matricula} onChange={handleChange} />
+        <input name="orgao" placeholder="Órgão" value={formData.orgao} onChange={handleChange} />
 
-      <label>
-        Carteira de Identidade:
-        <input
-          type="file"
-          name="identidade"
-          accept=".pdf,.jpg,.jpeg,.png"
-          onChange={handleFileChange}
-          ref={identidadeRef}
-          required
-        />
-      </label>
+        <label className={styles.checkboxLabel}>
+          <input
+            type="checkbox"
+            name="sindicalizar"
+            checked={formData.sindicalizar}
+            onChange={handleChange}
+          />
+          Desejo me Sindicalizar
+        </label>
 
-      <label>
-        Pedido de Afiliação Assinado:
-        <input
-          type="file"
-          name="pedido"
-          accept=".pdf,.jpg,.jpeg,.png"
-          onChange={handleFileChange}
-          ref={pedidoRef}
-          required
-        />
-      </label>
+        {/* Campos de upload de arquivo */}
+        <label>
+          Carteira de Identidade:
+          <input
+            type="file"
+            name="identidade"
+            accept=".pdf,.jpg,.jpeg,.png"
+            onChange={handleFileChange}
+            ref={identidadeRef}
+            required
+          />
+        </label>
 
-      <label>
-        Comprovante de Endereço:
-        <input
-          type="file"
-          name="comprovante"
-          accept=".pdf,.jpg,.jpeg,.png"
-          onChange={handleFileChange}
-          ref={comprovanteRef}
-          required
-        />
-      </label>
+        <label>
+          Pedido de Afiliação Assinado:
+          <input
+            type="file"
+            name="pedido"
+            accept=".pdf,.jpg,.jpeg,.png"
+            onChange={handleFileChange}
+            ref={pedidoRef}
+            required
+          />
+        </label>
 
-      <button type="submit" disabled={loading}>
-        {loading ? "Enviando..." : "Enviar"}
-      </button>
-    </form>
+        <label>
+          Comprovante de Endereço:
+          <input
+            type="file"
+            name="comprovante"
+            accept=".pdf,.jpg,.jpeg,.png"
+            onChange={handleFileChange}
+            ref={comprovanteRef}
+            required
+          />
+        </label>
+
+        <button type="submit" disabled={loading}>
+          {loading ? "Enviando..." : "Enviar"}
+        </button>
+      </form>
+    </div>
   );
 };
 

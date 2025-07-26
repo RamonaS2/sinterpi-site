@@ -1,17 +1,24 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
+const sequelize = require('./config/db');
+require('dotenv').config();
 
+const adminRoutes = require('./routes/adminRoutes');
+const afiliadosRoutes = require('./routes/afiliadosRoutes'); 
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static('uploads'));
 
-// Rotas
-const cadastroRoute = require('./routes/cadastroRoutes');
-app.use('/api', cadastroRoute);
+app.use('/api/admin', adminRoutes);
+app.use('/api/afiliados', afiliadosRoutes); // A rota de cadastro será /api/afiliados (POST)
 
-app.listen(3001, () => {
-  console.log('Servidor rodando na porta 3001');
+sequelize.sync({ force: true }).then(() => { // Se precisar apagar e recriar, use { force: true } uma vez aqui
+  console.log('Banco sincronizado');
+  app.listen(process.env.PORT, () =>
+    console.log(`Servidor rodando na porta ${process.env.PORT}`)
+  );
+}).catch(err => {
+  console.error('Erro na sincronização do banco de dados:', err);
 });

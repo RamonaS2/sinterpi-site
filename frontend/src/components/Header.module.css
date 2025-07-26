@@ -1,4 +1,4 @@
-/* src/components/Header.module.css */
+/* frontend/src/components/Header.module.css */
 
 .header {
   background-color: #1b5e20; /* Verde institucional escuro */
@@ -7,25 +7,72 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sutil sombra */
+  position: sticky; /* Fixa a barra no topo */
+  top: 0;
+  z-index: 1000; /* Garante que fique acima de outros elementos */
 }
 
-.logo {
-  font-size: 1.5rem;
+.logoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.logoLink {
+  display: flex; /* Para alinhar imagem e texto */
+  align-items: center;
+  text-decoration: none;
+  color: white;
   font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.logoImage {
+  height: 50px; /* Ajuste o tamanho do logo na navbar */
+  margin-right: 10px;
+  filter: drop-shadow(0 0 5px rgba(0,0,0,0.3)); /* Sombra para o logo se destacar */
+}
+
+.logoText {
+  /* Opcional: estilizar o texto "SINTERPI" ao lado do logo */
+  font-size: 1.6rem;
+  white-space: nowrap; /* Evita quebra de linha em nomes curtos */
 }
 
 .navLinks {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem; /* Aumenta o espaçamento entre os links */
 }
 
 .link {
   color: white;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.2s ease; /* Adiciona transição para hover */
+  padding: 0.5rem 0; /* Padding para área de clique maior */
 }
 
 .link:hover {
   color: #a5d6a7; /* Verde claro no hover */
+  transform: translateY(-2px); /* Efeito sutil de levantar */
+}
+
+/* Responsividade básica para telas menores */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .navLinks {
+    margin-top: 1rem;
+    flex-direction: column; /* Links em coluna em telas menores */
+    gap: 0.5rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  .logoContainer {
+    margin-bottom: 0.5rem;
+  }
 }

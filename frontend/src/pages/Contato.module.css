@@ -1,63 +1,219 @@
 .container {
-    padding: 2rem;
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #f0fdf4;
-    border-radius: 12px;
+  padding: 3rem 2rem; /* Aumenta o padding geral */
+  max-width: 1200px; /* Aumenta um pouco a largura máxima */
+  margin: 0 auto;
+  background-color: #f8fcf8; /* Fundo suave para o container principal */
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.07); /* Sombra mais pronunciada */
+}
+
+.pageTitle {
+  color: #1b5e20; /* Verde institucional escuro */
+  font-size: 3rem; /* Título maior */
+  text-align: center;
+  margin-bottom: 3rem; /* Espaçamento maior abaixo do título */
+  position: relative;
+}
+
+.pageTitle::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 5px;
+  background-color: #2e8b57; /* Linha verde abaixo do título */
+  margin: 15px auto 0;
+  border-radius: 3px;
+}
+
+.contactContent {
+  display: flex;
+  flex-wrap: wrap; /* Permite que as colunas quebrem linha */
+  gap: 3rem; /* Aumenta o espaço entre o formulário e as informações */
+  justify-content: center; /* Centraliza as colunas */
+  align-items: flex-start; /* Alinha os itens ao topo */
+}
+
+/* Estilos para as seções de formulário e informações */
+.contactFormContainer,
+.contactInfoContainer {
+  flex: 1; /* Faz com que cada container ocupe o máximo de espaço possível */
+  min-width: 300px; /* Garante uma largura mínima para cada um */
+  background-color: #ffffff; /* Fundo branco para ambos os blocos */
+  padding: 2.5rem; /* Mais padding interno */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra para destacar os blocos */
+}
+
+.sectionHeading {
+  color: #2e8b57; /* Verde da floresta para os títulos de seção */
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center; /* Centraliza os títulos internos */
+}
+
+/* Estilos do Formulário */
+.contactForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup {
+  margin-bottom: 1.2rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.inputField,
+.textareaField {
+  width: 100%;
+  padding: 0.9rem 1.2rem; /* Aumenta o padding dos campos */
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Cantos mais arredondados */
+  font-size: 1rem;
+  font-family: inherit; /* Garante que a fonte seja a do body */
+  box-sizing: border-box; /* Inclui padding e borda na largura total */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.inputField:focus,
+.textareaField:focus {
+  border-color: #4CAF50; /* Borda verde no foco */
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2); /* Sombra suave no foco */
+  outline: none; /* Remove o outline padrão do navegador */
+}
+
+.textareaField {
+  resize: vertical; /* Permite redimensionar verticalmente */
+  min-height: 200px; /* Altura mínima para o textarea */
+}
+
+.submitButton {
+  background-color: #1b5e20; /* Verde institucional escuro para o botão */
+  color: white;
+  padding: 1rem 2.5rem;
+  border: none;
+  border-radius: 30px; /* Botão bem arredondado */
+  font-size: 1.15rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  align-self: flex-start; /* Alinha o botão à esquerda dentro da coluna flex */
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.submitButton:hover {
+  background-color: #2e8b57; /* Verde mais claro no hover */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos de Informação de Contato */
+.contactDetails {
+  margin-bottom: 2rem; /* Espaço abaixo dos detalhes de contato */
+}
+
+.contactItem {
+  display: flex; /* Para alinhar ícone e texto */
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.contactItem strong {
+  color: #333;
+  margin-right: 0.5rem; /* Espaço entre o rótulo e o valor */
+}
+
+.icon {
+  font-size: 1.4rem; /* Tamanho dos ícones */
+  color: #4CAF50; /* Cor verde para os ícones */
+  margin-right: 0.8rem;
+  line-height: 1; /* Alinha verticalmente */
+}
+
+.mapContainer {
+  margin-top: 2rem; /* Espaço acima do mapa */
+  border-radius: 10px;
+  overflow: hidden; /* Garante que o iframe siga o border-radius */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.mapContainer iframe {
+  border-radius: 10px; /* Para garantir que o iframe também tenha cantos arredondados */
+}
+
+/* Estilo para a mensagem de status do formulário (sucesso/erro) */
+.statusMessage {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  background-color: #e6ffe6; /* Verde muito claro para fundo */
+  color: #1b5e20; /* Verde escuro para texto */
+  border: 1px solid #4CAF50; /* Borda verde */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .contactContent {
+    flex-direction: column; /* Empilha as colunas em telas menores */
+    gap: 2rem;
   }
-  
-  h1 {
-    text-align: center;
-    color: #236c42;
+
+  .contactFormContainer,
+  .contactInfoContainer {
+    padding: 1.5rem;
+  }
+
+  .pageTitle {
+    font-size: 2.2rem;
     margin-bottom: 2rem;
   }
-  
-  .info {
-    margin-bottom: 2rem;
-    font-size: 1.1rem;
-    line-height: 1.6;
+
+  .pageTitle::after {
+    width: 80px;
+    height: 4px;
+    margin: 10px auto 0;
   }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+
+  .sectionHeading {
+    font-size: 1.5rem;
   }
-  
-  label {
-    display: flex;
-    flex-direction: column;
-    color: #333;
-    font-weight: 500;
-  }
-  
-  input,
-  textarea {
-    padding: 0.6rem;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+
+  .submitButton {
+    padding: 0.8rem 2rem;
     font-size: 1rem;
-    margin-top: 0.3rem;
   }
-  
-  button {
-    padding: 0.7rem;
-    background-color: #236c42;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+
+  .mapContainer iframe {
+    height: 250px; /* Ajusta a altura do mapa em telas menores */
   }
-  
-  button:hover {
-    background-color: #1e5936;
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1.5rem 1rem;
   }
-  
-  .mapContainer {
-    margin-top: 2rem;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  .pageTitle {
+    font-size: 1.8rem;
   }
+
+  .sectionHeading {
+    font-size: 1.3rem;
+  }
+
+  .inputField,
+  .textareaField {
+    padding: 0.7rem 1rem;
+    font-size: 0.9rem;
+  }
+}

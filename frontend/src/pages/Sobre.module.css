@@ -1,31 +1,283 @@
 .container {
-    padding: 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    background-color: #f8fdf9;
-    border-radius: 12px;
-  }
-  
-  h1 {
-    color: #236c42;
-    text-align: center;
+  padding: 3rem 2rem; /* Aumenta o padding geral */
+  max-width: 1000px; /* Largura máxima para centralizar o conteúdo */
+  margin: 0 auto;
+  background-color: #f8fcf8; /* Fundo suave para o container principal */
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.07); /* Sombra mais pronunciada */
+}
+
+.pageTitle {
+  color: #1b5e20; /* Verde institucional escuro */
+  font-size: 3rem; /* Título maior */
+  text-align: center;
+  margin-bottom: 3rem; /* Espaçamento maior abaixo do título */
+  position: relative;
+}
+
+.pageTitle::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 5px;
+  background-color: #2e8b57; /* Linha verde abaixo do título */
+  margin: 15px auto 0;
+  border-radius: 3px;
+}
+
+.section {
+  margin-bottom: 3rem; /* Espaçamento padrão entre as seções */
+  background-color: #ffffff; /* Fundo branco para cada seção */
+  padding: 2.5rem; /* Padding interno das seções */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* Sombra para destacar as seções */
+}
+
+.sectionHeading {
+  color: #2e8b57; /* Verde da floresta para os títulos das seções */
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  position: relative;
+}
+
+.sectionHeading::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background-color: #a5d6a7; /* Linha verde clara abaixo dos subtítulos */
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.sectionContent p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #444;
+  margin-bottom: 1rem;
+}
+
+.sectionImage {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Grupo de Missão, Visão e Valores */
+.mvvSectionGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem; /* Espaço entre Missão e Visão */
+  margin-bottom: 3rem;
+}
+
+.mvvSection {
+  flex: 1; /* Faz com que Missão e Visão ocupem o mesmo espaço */
+  min-width: 300px; /* Largura mínima para evitar colunas muito estreitas */
+  background-color: #e6f4ec; /* Um verde muito claro para o grupo MVV */
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.mvvSection .sectionHeading {
+  color: #1b5e20; /* Verde escuro para os títulos MVV */
+}
+
+
+/* Estilos para os Cards de Valores */
+.valuesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 3 colunas em telas maiores, ajusta para menos em menores */
+  gap: 1.5rem; /* Espaço entre os cards */
+  margin-top: 1.5rem;
+}
+
+.valueCard {
+  background-color: #ffffff;
+  padding: 1.8rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid #eee; /* Borda suave */
+}
+
+.valueCard:hover {
+  transform: translateY(-5px); /* Efeito de levantar no hover */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.valueIcon {
+  font-size: 2.5rem; /* Tamanho do ícone */
+  color: #2e8b57; /* Cor verde para os ícones */
+  display: block; /* Para que margin-bottom funcione */
+  margin-bottom: 0.8rem;
+}
+
+.valueCard h3 {
+  color: #1b5e20;
+  font-size: 1.3rem;
+  margin-bottom: 0.7rem;
+}
+
+.valueCard p {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Seção de Chamada para Ação (CTA) */
+.ctaSection {
+  text-align: center;
+  background-color: #dcedc8; /* Verde bem clarinho para a seção CTA */
+  padding: 3rem;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 4rem; /* Mais espaço acima do CTA */
+}
+
+.ctaSection .sectionHeading {
+  color: #1b5e20;
+  margin-bottom: 1.5rem;
+}
+
+.ctaSection p {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.ctaButtons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem; /* Espaço entre os botões */
+  flex-wrap: wrap; /* Permite que os botões quebrem linha */
+}
+
+.primaryCtaButton,
+.secondaryCtaButton {
+  padding: 1rem 2.5rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  display: inline-block;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.primaryCtaButton {
+  background-color: #2e8b57; /* Verde vibrante */
+  color: white;
+}
+
+.primaryCtaButton:hover {
+  background-color: #1b5e20; /* Verde escuro no hover */
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.secondaryCtaButton {
+  background-color: transparent;
+  border: 2px solid #2e8b57;
+  color: #2e8b57;
+}
+
+.secondaryCtaButton:hover {
+  background-color: #2e8b57;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .pageTitle {
+    font-size: 2.5rem;
     margin-bottom: 2rem;
   }
-  
+
+  .pageTitle::after {
+    width: 80px;
+    height: 4px;
+    margin: 10px auto 0;
+  }
+
   .section {
+    padding: 1.5rem;
     margin-bottom: 2rem;
   }
-  
-  .section h2 {
-    color: #236c42;
-    margin-bottom: 0.5rem;
+
+  .sectionHeading {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
   }
-  
-  .section ul {
-    padding-left: 1.5rem;
+
+  .sectionHeading::after {
+    width: 50px;
+    height: 3px;
   }
-  
-  .section li {
-    margin-bottom: 0.5rem;
+
+  .mvvSectionGroup {
+    flex-direction: column; /* Empilha Missão e Visão em telas menores */
+    gap: 1.5rem;
   }
-  
+
+  .valuesGrid {
+    grid-template-columns: 1fr; /* Uma coluna em telas muito pequenas */
+    gap: 1rem;
+  }
+
+  .valueCard {
+    padding: 1.5rem;
+  }
+
+  .valueIcon {
+    font-size: 2rem;
+  }
+
+  .ctaSection {
+    padding: 2rem;
+  }
+
+  .ctaButtons {
+    flex-direction: column; /* Empilha os botões CTA */
+    gap: 1rem;
+  }
+
+  .primaryCtaButton,
+  .secondaryCtaButton {
+    width: 100%; /* Botões CTA ocupam toda a largura */
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+
+  .pageTitle {
+    font-size: 2rem;
+  }
+
+  .sectionHeading {
+    font-size: 1.5rem;
+  }
+
+  .sectionContent p {
+    font-size: 1rem;
+  }
+
+  .valueCard h3 {
+    font-size: 1.2rem;
+  }
+
+  .valueCard p {
+    font-size: 0.9rem;
+  }
+}
