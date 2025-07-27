@@ -8,14 +8,20 @@ const sequelize = new Sequelize(
   process.env.DB_PASSWORD,
   {
     host: process.env.DB_HOST,
-    dialect: 'mysql',
+    dialect: 'postgres',
     logging: false, // Opcional: desabilita logs SQL do Sequelize
+    dialectOptions: { // Render pode precisar de SSL para Postgres
+        ssl: {
+            require: true,
+            rejectUnauthorized: false // Para Render, pode ser necessário para aceitar self-signed certs
+        }
+    }
   }
 );
 
 sequelize
   .authenticate()
-  .then(() => console.log('Conectado ao banco de dados MySQL com Sequelize!'))
+  .then(() => console.log('Conectado ao banco de dados PostgreSQL com Sequelize!'))
   .catch((err) => console.error('Erro ao conectar no banco de dados:', err));
 
 module.exports = sequelize;
