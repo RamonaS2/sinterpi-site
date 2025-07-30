@@ -1,5 +1,7 @@
+/* frontend/src/pages/Sobre.module.css */
+
 .container {
-  padding: 3rem 2rem; /* Aumenta o padding geral */
+  padding: 3rem 2rem; /* Mantém um bom padding em desktop */
   max-width: 1000px; /* Largura máxima para centralizar o conteúdo */
   margin: 0 auto;
   background-color: #f8fcf8; /* Fundo suave para o container principal */
@@ -56,14 +58,6 @@
   line-height: 1.8;
   color: #444;
   margin-bottom: 1rem;
-}
-
-.sectionImage {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-top: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Grupo de Missão, Visão e Valores */
@@ -134,10 +128,12 @@
 .ctaSection {
   text-align: center;
   background-color: #dcedc8; /* Verde bem clarinho para a seção CTA */
-  padding: 3rem;
+  padding: 3rem; /* Padding para desktop */
   border-radius: 15px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  margin-top: 4rem; /* Mais espaço acima do CTA */
+  margin-top: 4rem;
+  /* Adicionar box-sizing aqui também para garantir, embora deva ser global */
+  box-sizing: border-box;
 }
 
 .ctaSection .sectionHeading {
@@ -154,29 +150,34 @@
 .ctaButtons {
   display: flex;
   justify-content: center;
-  gap: 2rem; /* Espaço entre os botões */
-  flex-wrap: wrap; /* Permite que os botões quebrem linha */
+  gap: 2rem; /* Espaço entre os botões em desktop */
+  flex-wrap: wrap; /* Permite quebrar linha */
+  /* Importante: Remova max-width aqui se você a tinha, deixe os filhos controlarem a largura */
+  width: 100%; /* Garante que o contêiner dos botões ocupe a largura da seção */
+  box-sizing: border-box; /* Garante que padding/border sejam incluídos na largura */
 }
 
 .primaryCtaButton,
 .secondaryCtaButton {
-  padding: 1rem 2.5rem;
+  padding: 1rem 2.5rem; /* Padding para desktop */
   border-radius: 30px;
   text-decoration: none;
   font-weight: bold;
   font-size: 1.1rem;
   transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  display: inline-block;
+  display: inline-block; /* Para comportar-se como um bloco e ter padding/transform */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0; /* Garante que o botão não encolha */
+  /* Removido o max-width fixo para desktop, confiaremos no flex-basis/padding */
 }
 
 .primaryCtaButton {
-  background-color: #2e8b57; /* Verde vibrante */
+  background-color: #2e8b57;
   color: white;
 }
 
 .primaryCtaButton:hover {
-  background-color: #1b5e20; /* Verde escuro no hover */
+  background-color: #1b5e20;
   transform: translateY(-3px);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
 }
@@ -195,27 +196,35 @@
 }
 
 
-/* Responsividade */
+/* ========================================================= */
+/* --- RESPONSIVIDADE APERFEIÇOADA --- */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+  .container {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
 @media (max-width: 768px) {
   .pageTitle {
     font-size: 2.5rem;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
   }
 
   .pageTitle::after {
     width: 80px;
     height: 4px;
-    margin: 10px auto 0;
   }
 
   .section {
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+    padding: 2rem 1rem; /* Reduz o padding lateral das seções em mobile */
+    margin-bottom: 2.5rem;
   }
 
   .sectionHeading {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
   }
 
   .sectionHeading::after {
@@ -223,13 +232,22 @@
     height: 3px;
   }
 
+  .sectionContent p {
+    font-size: 1rem;
+  }
+
   .mvvSectionGroup {
-    flex-direction: column; /* Empilha Missão e Visão em telas menores */
+    flex-direction: column;
     gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .mvvSection {
+    min-width: unset;
   }
 
   .valuesGrid {
-    grid-template-columns: 1fr; /* Uma coluna em telas muito pequenas */
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
   }
 
@@ -241,36 +259,85 @@
     font-size: 2rem;
   }
 
+  .valueCard h3 {
+    font-size: 1.2rem;
+  }
+
+  .valueCard p {
+    font-size: 0.85rem;
+  }
+
   .ctaSection {
-    padding: 2rem;
+    padding: 2rem 1rem; /* Ajustado para 1rem */
+    margin-top: 3rem;
+  }
+
+  .ctaSection p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
   }
 
   .ctaButtons {
-    flex-direction: column; /* Empilha os botões CTA */
-    gap: 1rem;
+    flex-direction: column;
+    gap: 0.8rem; /* Reduz ainda mais o gap entre botões empilhados */
+    width: 100%; /* Garante que o contêiner de botões ocupe a largura total do pai */
+    max-width: 350px; /* Um max-width para o grupo de botões, centralizado abaixo */
+    margin: 0 auto; /* Centraliza o grupo de botões */
   }
 
   .primaryCtaButton,
   .secondaryCtaButton {
-    width: 100%; /* Botões CTA ocupam toda a largura */
+    width: 100%; /* Ocupa 100% da largura do .ctaButtons */
+    padding: 0.8rem 1.2rem; /* Reduz padding para telas pequenas */
+    font-size: 0.95rem; /* Ajusta tamanho da fonte */
+    max-width: none; /* Remove max-width para não restringir 100% */
   }
 }
 
 @media (max-width: 480px) {
   .container {
-    padding: 1.5rem 1rem;
+    padding: 1.5rem 0.5rem; /* Padding bem pequeno nas bordas */
   }
 
   .pageTitle {
     font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pageTitle::after {
+    width: 60px;
+    height: 3px;
+  }
+
+  .section {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
   }
 
   .sectionHeading {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .sectionHeading::after {
+    width: 40px;
+    height: 2px;
   }
 
   .sectionContent p {
-    font-size: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .valuesGrid {
+    grid-template-columns: 1fr; /* Força uma única coluna para valores */
+  }
+
+  .valueCard {
+    padding: 1.2rem;
+  }
+
+  .valueIcon {
+    font-size: 2rem;
   }
 
   .valueCard h3 {
@@ -278,6 +345,247 @@
   }
 
   .valueCard p {
+    font-size: 0.9rem;
+  }
+
+  .ctaSection {
+    padding: 1.5rem 0.5rem; /* Reduz o padding para a seção CTA */
+  }
+
+  .ctaButtons {
+    max-width: 300px; /* Limite ainda menor para o grupo de botões */
+  }
+  .primaryCtaButton,
+  .secondaryCtaButton {
+    padding: 0.7rem 1rem; /* Reduz ainda mais o padding dos botões */
+    font-size: 0.9rem;
+  }
+}
+
+/* frontend/src/pages/Sobre.module.css */
+
+/* ... (Todos os estilos anteriores até .ctaButtons) ... */
+
+.ctaButtons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem; /* Espaço entre os botões em desktop */
+  flex-wrap: wrap; /* Permite quebrar linha */
+  width: 100%; /* Garante que o contêiner dos botões ocupe a largura da seção */
+  box-sizing: border-box; /* Garante que padding/border sejam incluídos na largura */
+  /* Adicional: um padding interno para a caixa de botões em desktop, se o gap for causar problemas */
+  /* padding: 0 1rem; */ /* Exemplo, pode ser ajustado */
+}
+
+.primaryCtaButton,
+.secondaryCtaButton {
+  padding: 1rem 2.5rem; /* Padding para desktop */
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  display: inline-block; /* Para comportar-se como um bloco e ter padding/transform */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0; /* Garante que o botão não encolha */
+  /* Para desktop, eles podem ter uma largura calculada para ficar lado a lado */
+  flex-basis: calc(50% - 1rem); /* 50% menos metade do gap de 2rem (1rem). Confia no box-sizing! */
+  max-width: 300px; /* Limite para não ficarem gigantes em telas muito largas */
+}
+
+.primaryCtaButton {
+  background-color: #2e8b57;
+  color: white;
+}
+
+.primaryCtaButton:hover {
+  background-color: #1b5e20;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.secondaryCtaButton {
+  background-color: transparent;
+  border: 2px solid #2e8b57;
+  color: #2e8b57;
+}
+
+.secondaryCtaButton:hover {
+  background-color: #2e8b57;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+
+/* ========================================================= */
+/* --- RESPONSIVIDADE APERFEIÇOADA --- */
+/* ========================================================= */
+
+@media (max-width: 900px) {
+  .container {
+    padding: 2.5rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .pageTitle {
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .pageTitle::after {
+    width: 80px;
+    height: 4px;
+  }
+
+  .section {
+    padding: 2rem 1rem; /* Reduz o padding lateral das seções em mobile */
+    margin-bottom: 2.5rem;
+  }
+
+  .sectionHeading {
+    font-size: 2rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .sectionHeading::after {
+    width: 50px;
+    height: 3px;
+  }
+
+  .sectionContent p {
+    font-size: 1rem;
+  }
+
+  .mvvSectionGroup {
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .mvvSection {
+    min-width: unset;
+  }
+
+  .valuesGrid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .valueCard {
+    padding: 1.5rem;
+  }
+
+  .valueIcon {
+    font-size: 2rem;
+  }
+
+  .valueCard h3 {
+    font-size: 1.2rem;
+  }
+
+  .valueCard p {
+    font-size: 0.85rem;
+  }
+
+  .ctaSection {
+    padding: 2rem 1rem; /* Ajustado para 1rem */
+    margin-top: 3rem;
+  }
+
+  .ctaSection p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    gap: 0.8rem; /* Reduz o gap entre botões empilhados */
+    width: 100%; /* Garante que o contêiner de botões ocupe a largura total do pai */
+    max-width: 350px; /* Um max-width para o grupo de botões, centralizado abaixo */
+    margin: 0 auto; /* Centraliza o grupo de botões */
+  }
+
+  .primaryCtaButton,
+  .secondaryCtaButton {
+    /* *** CORREÇÃO AQUI: Usar calc() para garantir que o padding seja subtraído *** */
+    /* width: 100% - (padding-left + padding-right + border-left + border-right) */
+    /* No seu caso, o padding é 0.8rem + 1.2rem, mas o calc é para a largura total do padding horizontal*/
+    width: calc(100% - (1.2rem * 2)); /* 100% da largura do pai MENOS o padding horizontal total do próprio botão (1.2rem de cada lado) */
+    padding: 0.8rem 1.2rem; /* Mantido o padding ajustado */
+    font-size: 0.95rem; /* Ajusta tamanho da fonte */
+    max-width: none; /* Remove max-width para não restringir 100% */
+    display: block; /* Garante que o display seja block quando empilhado para ocupar a largura total */
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1.5rem 0.5rem; /* Padding bem pequeno nas bordas */
+  }
+
+  .pageTitle {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pageTitle::after {
+    width: 60px;
+    height: 3px;
+  }
+
+  .section {
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .sectionHeading {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+
+  .sectionHeading::after {
+    width: 40px;
+    height: 2px;
+  }
+
+  .sectionContent p {
+    font-size: 0.9rem;
+  }
+
+  .valuesGrid {
+    grid-template-columns: 1fr; /* Força uma única coluna para valores */
+  }
+
+  .valueCard {
+    padding: 1.2rem;
+  }
+
+  .valueIcon {
+    font-size: 2rem;
+  }
+
+  .valueCard h3 {
+    font-size: 1.2rem;
+  }
+
+  .valueCard p {
+    font-size: 0.9rem;
+  }
+
+  .ctaSection {
+    padding: 1.5rem 0.5rem; /* Reduz o padding para a seção CTA */
+  }
+
+  .ctaButtons {
+    max-width: 300px; /* Limite ainda menor para o grupo de botões */
+  }
+  .primaryCtaButton,
+  .secondaryCtaButton {
+    /* Recalcula com o padding menor do 480px */
+    width: calc(100% - (1rem * 2)); /* 100% menos o padding horizontal de 1rem */
+    padding: 0.7rem 1rem; /* Padding ajustado */
     font-size: 0.9rem;
   }
 }
